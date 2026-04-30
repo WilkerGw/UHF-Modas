@@ -1,7 +1,6 @@
 "use client";
 
-import { MapPin, Train, Walking, ArrowUpRight } from "lucide-react";
-import { MoveRight } from "lucide-react";
+import { MapPin, Train, ArrowUpRight, MoveRight } from "lucide-react";
 
 export default function LocationSection() {
   return (
