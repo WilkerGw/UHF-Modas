@@ -1,17 +1,27 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import Image from "next/image";
 import Link from "next/link";
+import { useEffect } from "react";
 import { ChevronLeft } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 import { PRODUCTS, Audience, Category } from "@/lib/data";
 import ProductCard from "@/components/products/ProductCard";
 
-
-
 export default function ProductsPage() {
-  const [activeAudience, setActiveAudience] = useState<Audience | "todos">("todos");
+  const searchParams = useSearchParams();
+  const initialAudience = (searchParams.get("audience") as Audience) || "todos";
+
+  const [activeAudience, setActiveAudience] = useState<Audience | "todos">(initialAudience);
   const [activeCategory, setActiveCategory] = useState<Category | "todas">("todas");
+
+  // Update filter when URL params change
+  useEffect(() => {
+    const audienceParam = searchParams.get("audience");
+    if (audienceParam) {
+      setActiveAudience(audienceParam as Audience);
+    }
+  }, [searchParams]);
 
   const filteredProducts = useMemo(() => {
     return PRODUCTS.filter((product) => {

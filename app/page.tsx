@@ -14,13 +14,13 @@ import ProductCard from "@/components/products/ProductCard";
 import { MOCK_MASC, MOCK_FEM, MOCK_INFANTIL } from "@/lib/data";
 
 // Reusable Carousel Component for Emphasis
-const EmphasisCarousel = ({ title, items, bgColor }: { title: string, items: { title: string, subtitle: string, img: string }[], bgColor: string }) => (
+const EmphasisCarousel = ({ title, items, bgColor, href = "/produtos" }: { title: string, items: { title: string, subtitle: string, img: string }[], bgColor: string, href?: string }) => (
   <section className={`py-16 ${bgColor}`}>
     <div className="px-6 mb-8 flex justify-between items-end">
       <h2 className="font-display text-4xl uppercase tracking-tighter">{title}</h2>
-      <button className="group flex items-center gap-2 text-sm uppercase tracking-wider font-semibold hover:text-gray-500 transition-colors">
+      <Link href={href} className="group flex items-center gap-2 text-sm uppercase tracking-wider font-semibold hover:text-gray-500 transition-colors">
         Ver Tudo <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
-      </button>
+      </Link>
     </div>
     <div className="flex flex-row flex-nowrap overflow-x-auto w-full no-scrollbar gap-6 px-6 pb-8 snap-x snap-mandatory">
       {items.map((item, idx) => (
@@ -39,9 +39,14 @@ const EmphasisCarousel = ({ title, items, bgColor }: { title: string, items: { t
 );
 
 // Reusable Carousel Component for Products
-const ProductCarousel = ({ title, products }: { title: string, products: any[] }) => (
+const ProductCarousel = ({ title, products, href = "/produtos" }: { title: string, products: any[], href?: string }) => (
   <div className="mb-16">
-    <h3 className="font-display text-2xl uppercase px-6 mb-6 tracking-wide text-uhf-black/80">{title}</h3>
+    <div className="px-6 mb-6 flex justify-between items-end">
+      <h3 className="font-display text-2xl uppercase tracking-wide text-uhf-black/80">{title}</h3>
+      <Link href={href} className="group flex items-center gap-2 text-xs uppercase tracking-wider font-bold hover:text-gray-500 transition-colors opacity-60 hover:opacity-100">
+        Ver Tudo <ArrowRight className="w-3 h-3 transform group-hover:translate-x-1 transition-transform" />
+      </Link>
+    </div>
     <div className="flex flex-row flex-nowrap overflow-x-auto w-full no-scrollbar gap-4 px-6 pb-4 snap-x snap-mandatory">
       {products.map((prod, idx) => (
         <ProductCard key={idx} prod={prod} className="flex-none w-[65vw] md:w-[300px] snap-start" />
@@ -118,6 +123,7 @@ export default function Home() {
         <EmphasisCarousel
           title="Looks Masc"
           bgColor="bg-white"
+          href="/produtos?audience=masculino"
           items={[
             { title: "Drop 04 - Core", subtitle: "Peças essenciais de streetwear", img: "/images/masc-calcas/01.webp" },
             { title: "Techwear Base", subtitle: "Funcionalidade e estilo", img: "/images/masc-calcas/03.webp" },
@@ -128,6 +134,7 @@ export default function Home() {
         <EmphasisCarousel
           title="Shoes Masc"
           bgColor="bg-uhf-light"
+          href="/produtos?audience=masculino"
           items={[
             { title: "Sneaker 01", subtitle: "Silhueta clássica", img: "/images/masc-shoes/01.webp" },
             { title: "Chunky Force", subtitle: "Sola tratorada", img: "/images/masc-shoes/02.webp" },
@@ -144,6 +151,7 @@ export default function Home() {
         <EmphasisCarousel
           title="Looks Fem"
           bgColor="bg-white"
+          href="/produtos?audience=feminino"
           items={[
             { title: "Essence Drop", subtitle: "Caimento perfeito", img: "/images/fem-blusas/05.webp" },
             { title: "Night Out", subtitle: "All black everything", img: "/images/fem-blusas/07.webp" },
@@ -154,6 +162,7 @@ export default function Home() {
         <EmphasisCarousel
           title="Shoes Fem"
           bgColor="bg-uhf-light"
+          href="/produtos?audience=feminino"
           items={[
             { title: "Platform X", subtitle: "Altura e conforto", img: "/images/fem-shoes/01.webp" },
             { title: "Slip-on Dark", subtitle: "Praticidade minimal", img: "/images/fem-shoes/02.webp" },
@@ -186,9 +195,9 @@ export default function Home() {
         </div>
 
 
-        <ProductCarousel title="Masculino" products={MOCK_MASC} />
-        <ProductCarousel title="Feminino" products={MOCK_FEM} />
-        <ProductCarousel title="Infantil" products={MOCK_INFANTIL} />
+        <ProductCarousel title="Masculino" products={MOCK_MASC} href="/produtos?audience=masculino" />
+        <ProductCarousel title="Feminino" products={MOCK_FEM} href="/produtos?audience=feminino" />
+        <ProductCarousel title="Infantil" products={MOCK_INFANTIL} href="/produtos?audience=infantil" />
       </section>
     </main>
   );
