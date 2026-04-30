@@ -13,7 +13,7 @@ interface ProductCardProps {
 export default function ProductCard({ prod, className = "" }: ProductCardProps) {
   const [currentIdx, setCurrentIdx] = useState(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
-  const images = [prod.img, prod.imgHover].filter(Boolean);
+  const images = ([prod.img, prod.imgHover].filter(Boolean) as string[]);
 
   const nextImage = (e?: React.MouseEvent) => {
     e?.stopPropagation();
